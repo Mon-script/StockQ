@@ -1,0 +1,48 @@
+.CodigoDeBarras2{
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background: #f1ebeb;
+  border: 1px solid #050505;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(77, 26, 26, 0.1);
+  width: 300px;
+  height: 200px ;
+  margin: 50px;
+  background-color: rgb(180, 178, 178);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    
+  }
+  
+  
+  /* Estilos del campo de entrada */
+  .CodigoLabel2 {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  .CodigoInput2 {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos del botón */
+  .CodigoButton2 {
+    background-color: #e5e9e6;
+    color: #000000;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .CodigoButton2:hover {
+    background-color: #fd0404;
+  }

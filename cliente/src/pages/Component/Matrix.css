@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1; /* Establece una profundidad inicial */
+}
+
+.card:hover {
+  transform: scale(1.1); /* Aumenta el tamaño al pasar el ratón para simular profundidad */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 2; /* Asegura que la tarjeta resaltada esté encima de otras tarjetas */
+}
