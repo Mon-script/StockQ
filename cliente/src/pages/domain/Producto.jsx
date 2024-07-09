@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import TarjetaProducto from "../Component/tarjetas/TarjetaProducto"
-import Formularios from "../Component/formulario/Formulario";
-import BotonIngresar from '../Component/botones/BotonIngresar';
 import "./Producto.css";
-import ProductoCard from '../Component/tarjetas/productocard'
+import Modal from 'react-modal';
+
+
 
 
 export const Producto = () => {
@@ -12,10 +11,14 @@ export const Producto = () => {
   const [photo, setPhoto] = useState('');
   const [files, setFiles] = useState([]);
   const [fileupdated, setFileupdated] = useState(false)
+  const [modalAbierto, setModalAbierto]= useState(false)
+  const [imagenActual, setIamgenActual]= useState(null)
 
 
 
   useEffect(() => {
+
+    Modal.setAppElement('body')
     fetch('http://localhost:3000/productos/get')
       .then(response => response.json())
       .then(response => {
@@ -65,7 +68,12 @@ export const Producto = () => {
       document.getElementById("FOTO").value = null
       setShowForm(false);
     }
+
   };
+      const manejadorModal = (estaAbierto, imagenActual)=>{
+        setModalAbierto(estaAbierto)
+        setIamgenActual(imagenActual)
+      }
   return (
     <>
       <div className="min-h-screen flex flex-col items-center pt-4">
@@ -74,12 +82,12 @@ export const Producto = () => {
           <button
             className="bg-red-500 text-white py-2 px-6 rounded-full hover:bg-red-600 transition duration-300"
             onClick={() => setShowForm(true)}
-            hidden={showForm? true:false}
+            hidden={showForm ? true : false}
           >
             Agregar
           </button>
         </div>
-         {showForm && (
+        {showForm && (
           <div className="flex flex-col items-center justify-center w-full mt-8">
             <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
               <form className="space-y-6 w-full">
@@ -112,7 +120,7 @@ export const Producto = () => {
                     className="bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-600 transition duration-300"
                     type="button"
                     onClick={handleAddProduct}
-                    
+
                   >
                     Agregar
                   </button>
@@ -129,11 +137,36 @@ export const Producto = () => {
           </div>
         )}
         <br />
-        <ProductoCard files={files}/>
-        
+        {/*aquirenderizaproductos*/}
+        <div className='container mt-3' style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {files.map(imagen => (
+            <div key={imagen} className='card m-2'>
+              <img src={'http://localhost:3000/' + imagen} alt="producto" className='card-img-top' style={{ height: '30vh', width: '30vw' }} />
+              <div className='card-body'>
+                <button onClick={()=>{manejadorModal(true,imagen)}} style={{ backgroundColor: 'black', color: 'white', padding: '0.5em', borderRadius: '10px' }}>Detalle</button>
+              </div>
+
+            </div>
+
+          ))}
+        </div>
+
+
 
 
       </div>
+
+      <Modal style={{content:{right:'20%', left:'20%'}}} isOpen={modalAbierto} onRequestClose={()=>{manejadorModal(false,null)}}>
+        <div className='card'>
+          <img src={'http://localhost:3000/' + imagenActual} alt="..." />
+
+          <div className='card-body' style={{display:'flex', justifyContent:'space-between'}}>
+
+            <button style={{ backgroundColor: 'red', color: 'white', padding: '0.5em', borderRadius: '10px' }}>Borrar Producto</button>
+          </div>
+
+        </div>
+      </Modal>
 
     </>
   );

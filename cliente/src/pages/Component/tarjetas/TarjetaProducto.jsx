@@ -7,7 +7,7 @@ const TarjetaProducto = ({ avatar, title, peso, calidad, details }) => {
     <div className="cards1">
       <div className="cards1-details">
         <p className="text-title"></p>
-        <img src={'http://localhost:3000/'+avatar} alt="" className='w-[180px] h-[150px] border rounded p-1' />
+        <img src={'http://localhost:3000/'+avatar} alt={avatar} className='w-[180px] h-[150px] border rounded p-1' />
         <p className="text-body"></p>
         <p className="text-body"></p>
         <p className="text-body"></p>

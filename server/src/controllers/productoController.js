@@ -47,7 +47,7 @@ module.exports.getProducts =(req,res)=>{
                 res.send(err);
             }else {
                 result.map(producto=>{
-                    fs.writeFileSync(path.join(__dirname,'../dbImagenes/'+producto.id+'-producto.png'),producto.avatar)
+                    fs.writeFileSync(path.join(__dirname,'../dbImagenes/'+ producto.id+'-producto.png'),producto.avatar)
                 })
 
                 const nombreimagen= fs.readdirSync(path.join(__dirname,'../dbImagenes'))
@@ -55,6 +55,28 @@ module.exports.getProducts =(req,res)=>{
                 console.log(nombreimagen);
                 res.json(nombreimagen);
             }
+            
+
+        })
+    }catch (error) {
+        console.error(error);
+        res.send(error);
+    }
+
+
+}
+
+module.exports.deleteProducts =(req,res)=>{
+    const consult = 'DELETE from PRODUCTO WHERE id = (?)';
+    try{
+        connection.query(consult,[req.params.id],(err,result)=>{
+            if(err){
+                console.error(err)
+                res.send(err);
+            }
+                fs.unlinkSync(path.join(__dirname,'../dbImagenes/'+req.params.id+'-producto.png'))
+                res.send('se borro su producto');
+            
             
 
         })

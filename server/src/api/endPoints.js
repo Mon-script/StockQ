@@ -5,6 +5,7 @@ const { login } = require('../controllers/loginController')
 const {getSalida}= require('../controllers/salidaControler')
 const {saveProduct}=require('../controllers/productoController')
 const {getProducts}=require('../controllers/productoController')
+const {deleteProducts}=require('../controllers/productoController')
 const multer=require('multer')
 const path = require('path')
 
@@ -33,6 +34,8 @@ router.get('/productos/get',getProducts);
 
 router.post('/login', login);
 router.post('/saveProduct',avatarSubir, saveProduct);
+
+router.delete('/producto/delete/:id',deleteProducts)
 
 
 module.exports = router;
