@@ -74,6 +74,27 @@ export const Producto = () => {
         setModalAbierto(estaAbierto)
         setIamgenActual(imagenActual)
       }
+
+      const manejarBorrar = () => {
+        // tira un alert para confirmar- cambiar estetica luego
+        if (window.confirm('¿Está seguro de borrar este producto?')) {
+            let id = imagenActual.split('-');
+            id = parseInt(id[0]);
+    
+            fetch('http://localhost:3000/producto/delete/' + id, {
+                method: 'DELETE'
+            })
+            .then(resp => resp.text())
+            .then(resp => {
+                console.log(resp);
+                setModalAbierto(false);
+                setFileupdated(true);
+            });
+        } else {
+          setModalAbierto(false);
+        }
+    }
+    
   return (
     <>
       <div className="min-h-screen flex flex-col items-center pt-4">
@@ -162,7 +183,7 @@ export const Producto = () => {
 
           <div className='card-body' style={{display:'flex', justifyContent:'space-between'}}>
 
-            <button style={{ backgroundColor: 'red', color: 'white', padding: '0.5em', borderRadius: '10px' }}>Borrar Producto</button>
+            <button onClick={manejarBorrar} style={{ backgroundColor: 'red', color: 'white', padding: '0.5em', borderRadius: '10px' }}>Borrar Producto</button>
           </div>
 
         </div>
