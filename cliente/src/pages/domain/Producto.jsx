@@ -11,8 +11,8 @@ export const Producto = () => {
   const [photo, setPhoto] = useState('');
   const [files, setFiles] = useState([]);
   const [fileupdated, setFileupdated] = useState(false)
-  const [modalAbierto, setModalAbierto]= useState(false)
-  const [imagenActual, setIamgenActual]= useState(null)
+  const [modalAbierto, setModalAbierto] = useState(false)
+  const [imagenActual, setIamgenActual] = useState(null)
 
 
 
@@ -70,31 +70,31 @@ export const Producto = () => {
     }
 
   };
-      const manejadorModal = (estaAbierto, imagenActual)=>{
-        setModalAbierto(estaAbierto)
-        setIamgenActual(imagenActual)
-      }
+  const manejadorModal = (estaAbierto, imagenActual) => {
+    setModalAbierto(estaAbierto)
+    setIamgenActual(imagenActual)
+  }
 
-      const manejarBorrar = () => {
-        // tira un alert para confirmar- cambiar estetica luego
-        if (window.confirm('¿Está seguro de borrar este producto?')) {
-            let id = imagenActual.split('-');
-            id = parseInt(id[0]);
-    
-            fetch('http://localhost:3000/producto/delete/' + id, {
-                method: 'DELETE'
-            })
-            .then(resp => resp.text())
-            .then(resp => {
-                console.log(resp);
-                setModalAbierto(false);
-                setFileupdated(true);
-            });
-        } else {
+  const manejarBorrar = () => {
+    // tira un alert para confirmar- cambiar estetica luego
+    if (window.confirm('¿Está seguro de borrar este producto?')) {
+      let id = imagenActual.split('-');
+      id = parseInt(id[0]);
+
+      fetch('http://localhost:3000/producto/delete/' + id, {
+        method: 'DELETE'
+      })
+        .then(resp => resp.text())
+        .then(resp => {
+          console.log(resp);
           setModalAbierto(false);
-        }
+          setFileupdated(true);
+        });
+    } else {
+      setModalAbierto(false);
     }
-    
+  }
+
   return (
     <>
       <div className="min-h-screen flex flex-col items-center pt-4">
@@ -159,17 +159,22 @@ export const Producto = () => {
         )}
         <br />
         {/*aquirenderizaproductos*/}
-        <div className='container mt-3' style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {files.map(imagen => (
-            <div key={imagen} className='card m-2'>
-              <img src={'http://localhost:3000/' + imagen} alt="producto" className='card-img-top' style={{ height: '30vh', width: '30vw' }} />
-              <div className='card-body'>
-                <button onClick={()=>{manejadorModal(true,imagen)}} style={{ backgroundColor: 'black', color: 'white', padding: '0.5em', borderRadius: '10px' }}>Detalle</button>
+        <div className="container mx-auto mt-6">
+          <div className="flex flex-wrap justify-center">
+            {files.map((imagen, index) => (
+              <div key={index} className="max-w-xs rounded overflow-hidden shadow-lg m-4">
+                <img src={'http://localhost:3000/' + imagen} alt="producto" className="w-full" style={{ height: '30vh', width: '30vw' }} />
+                <div className="px-6 py-4">
+                  <button
+                    onClick={() => manejadorModal(true, imagen)}
+                    className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 transition duration-300"
+                  >
+                    Detalle
+                  </button>
+                </div>
               </div>
-
-            </div>
-
-          ))}
+            ))}
+          </div>
         </div>
 
 
@@ -177,17 +182,22 @@ export const Producto = () => {
 
       </div>
 
-      <Modal style={{content:{right:'20%', left:'20%'}}} isOpen={modalAbierto} onRequestClose={()=>{manejadorModal(false,null)}}>
-        <div className='card'>
-          <img src={'http://localhost:3000/' + imagenActual} alt="..." />
-
-          <div className='card-body' style={{display:'flex', justifyContent:'space-between'}}>
-
-            <button onClick={manejarBorrar} style={{ backgroundColor: 'red', color: 'white', padding: '0.5em', borderRadius: '10px' }}>Borrar Producto</button>
+      <Modal className="modal" style={{ content: { right: '20%', left: '20%' } }} isOpen={modalAbierto} onRequestClose={() => manejadorModal(false, null)}>
+        <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mt-10 border border-gray-300 rounded-lg">
+          <div className="card">
+            <img src={'http://localhost:3000/' + imagenActual} alt="producto" className="w-full h-64 object-cover rounded-t-lg" />
+            <div className="card-body flex justify-between px-4 py-2">
+              <button
+                onClick={manejarBorrar}
+                className="bg-red-500 text-white p-2 rounded-md mt-2"
+              >
+                Borrar Producto
+              </button>
+            </div>
           </div>
-
         </div>
       </Modal>
+
 
     </>
   );
