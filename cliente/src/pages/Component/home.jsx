@@ -29,7 +29,7 @@ const Home = () => {
           backgroundSize: 'cover'
         }}>
           <div className="container mx-auto px-6">
-            <h2 className="text-3xl font-semibold text-grey-800 text-center mb-12">Nosotros</h2>
+            <h2 className="text-3xl font-semibold text-grey-300 text-center mb-12 bg-gray-100 rounded-lg shadow-lg p-6" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>Una mirada a Quillen</h2>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               <div className="bg-gray-100 rounded-lg shadow-lg p-6 text-center" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Calidad y Performance</h3>
