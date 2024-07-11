@@ -8,11 +8,15 @@ import Modal from 'react-modal';
 export const Producto = () => {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
+  const [codigoBarra, setCodigoBarra] = useState('');
+  const [calidad, setCalidad] = useState('');
   const [photo, setPhoto] = useState('');
   const [files, setFiles] = useState([]);
   const [fileupdated, setFileupdated] = useState(false)
   const [modalAbierto, setModalAbierto] = useState(false)
   const [imagenActual, setIamgenActual] = useState(null)
+  const [nombreActual, setNombreActual] = useState('')
+  const [calidadActual, setCalidadActual] = useState('')
 
 
 
@@ -35,13 +39,15 @@ export const Producto = () => {
 
     formdata.append('nombre', name)
     formdata.append('avatar', photo)
+    formdata.append('codigoBarra', parseInt(codigoBarra))
+    formdata.append('calidad', calidad)
     /* const data = {
        nombre: JSON.stringify(name),
        avatar: avatarProcesado
      }*/
 
-    if (!name || !photo) {
-      alert('ERROR, Debes enviar tanto el nombre del producto como su foto')
+    if (!name || !photo || !calidad || !codigoBarra) {
+      alert('ERROR, Debes todo el formulario para poder enviarlo PUTARDO')
       return
     } else {
 
@@ -64,6 +70,7 @@ export const Producto = () => {
 
       setName('');
       setPhoto('');
+      setCalidad('');
       document.getElementById("NOMBRE").value = ""
       document.getElementById("FOTO").value = null
       setShowForm(false);
@@ -76,12 +83,14 @@ export const Producto = () => {
   }
 
   const manejarBorrar = () => {
-    // tira un alert para confirmar- cambiar estetica luego
+    // tira un alert para confirmar - cambiar estetica luego
     if (window.confirm('¿Está seguro de borrar este producto?')) {
-      let id = imagenActual.split('-');
-      id = parseInt(id[0]);
+      let imageninfo = imagenActual.split('-');
+      let id = parseInt(imageninfo[0]);
+      let nombree = imageninfo[1];
+      let calidaa = imageninfo[2];
 
-      fetch('http://localhost:3000/producto/delete/' + id, {
+      fetch('http://localhost:3000/producto/delete/' + id +'/'+ nombree +'/'+ calidaa, {
         method: 'DELETE'
       })
         .then(resp => resp.text())
@@ -95,6 +104,15 @@ export const Producto = () => {
     }
   }
 
+  const setearNombreCalidad = (imagenActual)=>{
+    let imageninfo = imagenActual.split('-');
+    let nombree = imageninfo[1];
+    let calidaa = imageninfo[2];
+    console.log(nombree,calidaa)
+    setCalidadActual(calidaa)
+    setNombreActual(nombree)
+  }
+
   return (
     <>
       <div className="min-h-screen flex flex-col items-center pt-4">
@@ -102,7 +120,11 @@ export const Producto = () => {
           <h2 className="text-3xl font-semibold text-red-700 text">Agregar Producto Aqui!</h2>
           <button
             className="bg-red-500 text-white py-2 px-6 rounded-full hover:bg-red-600 transition duration-300"
-            onClick={() => setShowForm(true)}
+            onClick={() => {setShowForm(true)
+              setName('');
+              setPhoto('');
+              setCalidad('')
+            }}
             hidden={showForm ? true : false}
           >
             Agregar
@@ -122,19 +144,35 @@ export const Producto = () => {
                     type="text"
                     required
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value.toLowerCase())}
                   />
                 </div>
                 <div>
                   <label htmlFor="codigo" className="block text-sm font-medium text-gray-700 mb-1">
-                    Intruducir codigo de barra:
+                    Introducir codigo de barra:
                   </label>
                   <input
                     id="codigo"
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
                     type="number"
                     required
-                    
+                    value={codigoBarra}
+                    onChange={(e) => setCodigoBarra(e.target.value)}
+
+                  />
+                </div>
+                <div>
+                  <label htmlFor="calidad" className="block text-sm font-medium text-gray-700 mb-1">
+                    Introducir calidad de producto:
+                  </label>
+                  <input
+                    id="calidad"
+                    className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                    type="text"
+                    required
+                    value={calidad}
+                    onChange={(e) => setCalidad(e.target.value.toLowerCase())}
+
                   />
                 </div>
                 <div>
@@ -178,7 +216,9 @@ export const Producto = () => {
                 <img src={'http://localhost:3000/' + imagen} alt="producto" className="w-full" style={{ height: '30vh', width: '30vw' }} />
                 <div className="px-6 py-4">
                   <button
-                    onClick={() => manejadorModal(true, imagen)}
+                    onClick={() =>{ manejadorModal(true, imagen)
+                                    setearNombreCalidad(imagen)
+                    }}
                     className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 transition duration-300"
                   >
                     Detalle
@@ -194,11 +234,22 @@ export const Producto = () => {
 
       </div>
 
-      <Modal className="modal" style={{ content: { right: '20%', left: '20%' } }} isOpen={modalAbierto} onRequestClose={() => manejadorModal(false, null)}>
-        <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mt-10 border border-gray-300 rounded-lg">
-          <div className="card">
-            <img src={'http://localhost:3000/' + imagenActual} alt="producto" className="w-full h-64 object-cover rounded-t-lg" />
+      <Modal
+        className="modal"
+        style={{ content: { right: '20%', left: '20%', background: 'white', opacity: 1 } }}
+        isOpen={modalAbierto}
+        onRequestClose={() => manejadorModal(false, null)}
+      >
+        <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mt-10 border border-gray-300 rounded-lg bg-white opacity-100">
+          <div className="card bg-white opacity-100">
+            <img
+              src={'http://localhost:3000/' + imagenActual}
+              alt="producto"
+              className="w-full h-100 object-cover rounded-t-lg"
+            />
             <div className="card-body flex justify-between px-4 py-2">
+              
+              <article><h3>Nombre: {nombreActual.toUpperCase()} <br /> Calidad: {calidadActual.toUpperCase()} </h3></article>
               <button
                 onClick={manejarBorrar}
                 className="bg-red-500 text-white p-2 rounded-md mt-2"
@@ -216,44 +267,3 @@ export const Producto = () => {
 
 
 }
-
-
-//aqui ant
-/* const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const handleIngresarClick = () => {
-    // Mostrar el formulario al hacer clic en "Ingresar"
-    setMostrarFormulario(true);
-  };
-
-    
-    return(
-        <>
-        <div className="TarjetaProduct">
-        <TarjetaProducto> </TarjetaProducto>
-        <TarjetaProducto> </TarjetaProducto>
-        <TarjetaProducto> </TarjetaProducto>
-        <TarjetaProducto> </TarjetaProducto>
-        <TarjetaProducto> </TarjetaProducto>
-
-        </div>
-        <div className="PosicionBottons">
-          <BotonIngresar texto = "Agregar" onIngresarClick={handleIngresarClick} ></BotonIngresar>
-          <BotonIngresar texto = "Editar"></BotonIngresar>
-          <BotonIngresar texto = "Eliminar"></BotonIngresar>
-        </div> aqui cierro*/
-
-{/* Mostrar el formulario si mostrarFormulario es true */ }
-/* aqui empieza {mostrarFormulario && <Formularios />}
-</> aqui cierra 
- 
-)
-
-<div className="contenedordefotos" style={{ display: 'flex',flexWrap:'wrap',margin:'10px' }}>
-          {files.map((image) => (
-
-            <img key={image} src={'http://localhost:3000/' + image} alt={image} style={{width:'25vw',height:'30vh', margin:'5px'}}/>
-
-
-          ))}
-
-        </div>*/

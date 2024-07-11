@@ -10,7 +10,7 @@ const Home = () => {
         </div>
       </header>
       <main className="flex-grow">
-      <section className="bg-cover bg-center h-screen" style={{ backgroundImage: 'url(https://www.shutterstock.com/image-photo/strawberry-field-on-fruit-farm-600nw-1666668379.jpg)' }}>
+      <section className="bg-cover bg-center h-screen" style={{ backgroundImage: 'url(https://www.dictionary.com/e/wp-content/uploads/2018/09/berries_1000x700-790x310.jpg)' }}>
 
           <div className="bg-black bg-opacity-50 h-full flex items-center">
             <div className="container mx-auto text-center text-white">
