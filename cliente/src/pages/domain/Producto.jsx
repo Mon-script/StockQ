@@ -35,7 +35,8 @@ export const Producto = () => {
   }, [fileupdated])
 
   const handleAddProduct = () => {
-    const formdata = new FormData()
+    const formdata = new FormData()//formdata prepara la info de la peticion 
+    //(con cabecera incluido)
 
     formdata.append('nombre', name)
     formdata.append('avatar', photo)
