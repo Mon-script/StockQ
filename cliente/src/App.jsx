@@ -12,6 +12,8 @@ import { Entrada } from './pages/domain/entrada';
 import { Salida } from './pages/domain/salida';
 
 
+
+
 function App() {
   
 

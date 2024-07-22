@@ -1,4 +1,5 @@
 import { Sidebar } from "keep-react";
+import { TeamOutlined, UserAddOutlined  } from '@ant-design/icons';
 import { Link,NavLink } from "react-router-dom";
 import {
   Storefront ,
@@ -15,6 +16,8 @@ export const SidebarComponent = () => {
     { id: 2, nombre: 'Stock', ruta: '/stock', icono: <StackOverflowLogo  size={32} color="#0715cf" /> },
     { id: 3, nombre: 'Entrada', ruta: '/entrada', icono: <ArrowCircleRight  size={32} color="#0adb23"/> },
     { id: 4, nombre: 'Salida', ruta: '/salida', icono: <ArrowCircleLeft size={32} color="#db0a0a" /> },
+    { id: 5, nombre: 'Registro', ruta: '/salida', icono: <UserAddOutlined size={32} color="#db0a0a" /> },
+    { id: 6, nombre: 'Personal', ruta: '/salida', icono: <TeamOutlined size={32} color="#db0a0a" /> },
   ]
 
   return (
