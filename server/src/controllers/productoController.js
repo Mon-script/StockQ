@@ -7,6 +7,8 @@ const fs = require('fs')
 module.exports.saveProduct = (req, res) =>{
     const { nombre } = req.body;
     const avatar = req.file;
+    const {calidad}=req.body;
+    const{codigoBarra}=req.body;
     const data = fs.readFileSync(path.join(__dirname,'../imagenes/'+ req.file.filename))
     /*aqui se lee la imagen para poder mandarla a la base de datos 
     se usa el modulo fs(file system) y se guarda esa lectura en la 
@@ -17,9 +19,9 @@ module.exports.saveProduct = (req, res) =>{
         (_dirname(variable global que devuelve la ubicacion de la carpeta donde es llamada)
         ,../imagenes/(ubicacion de la carpeta)+ el nombre del archivo))
     )*/ 
-    const consult = 'INSERT PRODUCTO (nombre, avatar) values (?,?)';
+    const consult = 'INSERT PRODUCTO (id_codigo_barra, nombre, avatar, calidad) values (?,?,?,?)';
     try{
-        connection.query(consult,[nombre,data],(err,result)=>{
+        connection.query(consult,[codigoBarra,nombre,data,calidad],(err,result)=>{
             if(err){
                 console.error(err)
                 res.send(err);
@@ -47,7 +49,7 @@ module.exports.getProducts =(req,res)=>{
                 res.send(err);
             }else {
                 result.map(producto=>{
-                    fs.writeFileSync(path.join(__dirname,'../dbImagenes/'+ producto.id+'-producto.png'),producto.avatar)
+                    fs.writeFileSync(path.join(__dirname,'../dbImagenes/'+ producto.id_codigo_barra+'-'+producto.nombre+'-'+producto.calidad+'-producto.png'),producto.avatar)
                 })
 
                 const nombreimagen= fs.readdirSync(path.join(__dirname,'../dbImagenes'))
@@ -67,14 +69,15 @@ module.exports.getProducts =(req,res)=>{
 }
 
 module.exports.deleteProducts =(req,res)=>{
-    const consult = 'DELETE from PRODUCTO WHERE id = (?)';
+    console.log(req.params.id)
+    const consult = 'DELETE from PRODUCTO WHERE id_codigo_barra = (?)';
     try{
         connection.query(consult,[req.params.id],(err,result)=>{
             if(err){
                 console.error(err)
                 res.send(err);
             }
-                fs.unlinkSync(path.join(__dirname,'../dbImagenes/'+req.params.id+'-producto.png'))
+                fs.unlinkSync(path.join(__dirname,'../dbImagenes/'+req.params.id+'-'+req.params.nombree+'-'+req.params.calidaa+'-producto.png'))
                 res.send('se borro su producto');
             
             

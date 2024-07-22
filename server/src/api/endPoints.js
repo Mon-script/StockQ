@@ -35,7 +35,7 @@ router.get('/productos/get',getProducts);
 router.post('/login', login);
 router.post('/saveProduct',avatarSubir, saveProduct);
 
-router.delete('/producto/delete/:id',deleteProducts)
+router.delete('/producto/delete/:id/:nombree/:calidaa',deleteProducts)
 
 
 module.exports = router;
