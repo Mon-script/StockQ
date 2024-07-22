@@ -5,16 +5,13 @@ import CodigodeBarra2 from '../codigodebarra/CodigodeBarras2';
 import CodigodeBarras1 from '../codigodebarra/CodigodeBarra1';
 
 const TarjetaStock = ({ producto }) => {
-  const { nombre, peso, calidad, color } = producto;
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [mostrarFormulario2, setMostrarFormulario2] = useState(false);
+  const { nombre, peso, calidad, color,idEntrada } = producto;
+  {/*const [mostrarFormulario, setMostrarFormulario] = useState(false);*/}
+  const [mostrarFormularioSalida, setMostrarFormularioSalida] = useState(false);
 
-  const handleIngresarClick = () => {
-    // Mostrar el formulario al hacer clic en "Entrada"
-    setMostrarFormulario(true);}
-    const handleIngresarClick2 = () => {
-      // Mostrar el formulario al hacer clic en "Entrada"
-      setMostrarFormulario2(true);}
+  
+    const manejarSalida = () => {
+      setMostrarFormularioSalida(true);}
 
   return (
     <div className="cards">
@@ -25,8 +22,8 @@ const TarjetaStock = ({ producto }) => {
         calidad:{calidad} <br></br>
         color:{color}
       </div>
-      <button className="btn" onClick={handleIngresarClick} >Entrada</button>
-      <button className="btn1" onClick={handleIngresarClick2}>Salida</button>
+      {/*<button className="btn" onClick={handleIngresarClick} >Entrada</button>*/}
+      <button className="btn1" onClick={manejarSalida}>Salida</button>
       <div className="bar">
         <div className="emptybar"></div>
         <div className="filledbar"></div>
@@ -34,7 +31,7 @@ const TarjetaStock = ({ producto }) => {
       {/* Mostrar el formulario si mostrarFormulario es true */}
       <div className='CodigosdeB'>
       {mostrarFormulario && <CodigodeBarras1 Texto="INGRESAR"></CodigodeBarras1>}
-      {mostrarFormulario2 && <CodigodeBarra2 Texto="SALIDA"></CodigodeBarra2>}
+      {mostrarFormularioSalida && <CodigodeBarra2 estadoForm={setMostrarFormularioSalida} Texto="SALIDA"></CodigodeBarra2>}
       </div>
     </div>
   );
