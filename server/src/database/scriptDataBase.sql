@@ -24,8 +24,11 @@ avatar LONGBLOB not null,
 calidad VARCHAR(20) NOT NULL
 );
 ALTER TABLE PRODUCTO MODIFY COLUMN id_codigo_barra BIGINT;
+ALTER TABLE PRODUCTO
+MODIFY COLUMN avatar LONGBLOB NOT NULL;
 
 
+describe PRODUCTO;
 
 select * from producto;
 
@@ -42,6 +45,29 @@ CREATE TABLE ENTRADA(
     FOREIGN KEY (id_codigo_barrafk) REFERENCES PRODUCTO(id_codigo_barra)
 );
 
+INSERT INTO ENTRADA (id_codigo_barrafk, estante, fecha, hora) VALUES
+    (1234567891234, 1, '2024-07-24', '08:00:00'),
+    (2365298562134, 2, '2024-07-24', '08:15:00'),
+    (4565456789767, 3, '2024-07-24', '08:30:00'),
+    (1234567891234, 1, '2024-07-24', '08:45:00'),
+    (2365298562134, 2, '2024-07-24', '09:00:00'),
+    (4565456789767, 3, '2024-07-24', '09:15:00'),
+    (1234567891234, 1, '2024-07-24', '09:30:00'),
+    (2365298562134, 2, '2024-07-24', '09:45:00'),
+    (4565456789767, 3, '2024-07-24', '10:00:00'),
+    (1234567891234, 1, '2024-07-24', '10:15:00'),
+    (2365298562134, 2, '2024-07-24', '10:30:00'),
+    (4565456789767, 3, '2024-07-24', '10:45:00'),
+    (1234567891234, 1, '2024-07-24', '11:00:00'),
+    (2365298562134, 2, '2024-07-24', '11:15:00'),
+    (4565456789767, 3, '2024-07-24', '11:30:00'),
+    (1234567891234, 1, '2024-07-24', '11:45:00'),
+    (2365298562134, 2, '2024-07-24', '12:00:00'),
+    (4565456789767, 3, '2024-07-24', '12:15:00'),
+    (1234567891234, 1, '2024-07-24', '12:30:00'),
+    (2365298562134, 2, '2024-07-24', '12:45:00'),
+    (4565456789767, 3, '2024-07-24', '13:00:00');
+
 CREATE TABLE SALIDA(
 id int primary key auto_increment not null,
 id_codigo_barrafk bigint not null,
@@ -51,8 +77,15 @@ hora time not null,
 FOREIGN KEY (id_codigo_barrafk) REFERENCES PRODUCTO(id_codigo_barra),
 FOREIGN KEY(id_empleadofk) REFERENCES USUARIO(id)
 );
+INSERT INTO SALIDA (id_codigo_barrafk, id_empleadofk, fecha, hora) VALUES
+    (1234567891234, 2, '2024-07-24', '08:30:00'),
+    (2365298562134, 3, '2024-07-24', '09:00:00'),
+    (4565456789767, 4, '2024-07-24', '09:30:00'),
+    (1234567891234, 2, '2024-07-24', '10:00:00'),
+    (2365298562134, 3, '2024-07-24', '10:30:00'),
+    (4565456789767, 4, '2024-07-24', '11:00:00');
 
--- join para salida:
+-- Prueba de join
 SELECT 
     S.id AS salida_id,
     P.id_codigo_barra,
