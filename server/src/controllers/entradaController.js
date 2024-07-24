@@ -1,22 +1,19 @@
 const connection = require("../models/db");
 
-module.exports.getSalida = (req, res) => {
+module.exports.getEntrada = (req, res) => {
   //const consult = 'SELECT * FROM SALIDA';
   const consult = `SELECT 
-    S.id AS salida_id,
+    E.id AS entrada_id,
     P.id_codigo_barra,
     P.nombre AS producto_nombre,
     P.calidad,
-    U.id AS empleado_id,
-    U.usuario AS empleado_nombre,
-    S.fecha,
-    S.hora
+    E.estante,
+    E.fecha,
+    E.hora
 FROM 
-    SALIDA S
+    ENTRADA E
 JOIN 
-    PRODUCTO P ON S.id_codigo_barrafk = P.id_codigo_barra
-JOIN 
-    USUARIO U ON S.id_empleadofk = U.id`
+    PRODUCTO P ON E.id_codigo_barrafk = P.id_codigo_barra`
 
   try {
     connection.query(consult, (err, results) => {

@@ -7,7 +7,8 @@ const {saveProduct}=require('../controllers/productoController')
 const {getProducts}=require('../controllers/productoController')
 const {deleteProducts}=require('../controllers/productoController')
 const multer=require('multer')
-const path = require('path')
+const path = require('path');
+const { getEntrada } = require('../controllers/entradaController');
 
 const almacenamientoTemporal= multer.diskStorage({
     destination: path.join(__dirname,'../imagenes'),//dirnaame es una variable global
@@ -30,6 +31,7 @@ const avatarSubir = multer({
 
 router.get('/ping', ping);
 router.get('/salida',getSalida);
+router.get('/entrada',getEntrada);
 router.get('/productos/get',getProducts);
 
 router.post('/login', login);
