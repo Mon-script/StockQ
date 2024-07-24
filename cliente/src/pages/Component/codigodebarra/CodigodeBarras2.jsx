@@ -1,7 +1,8 @@
+// CodigodeBarras2.js
 import React, { useState } from 'react';
-import "./CodigodeBarra2.css";
+import './CodigodeBarra2.css';
 
-const CodigodeBarras2 = ({estadoForm ,Texto, idEntrada}) => {
+const CodigodeBarras2 = ({ estadoForm, Texto, idEntrada }) => {
   const [codigoBarras, setCodigoBarras] = useState('');
   const [idEmpleado, setIdEmpleado] = useState('');
 
@@ -9,51 +10,58 @@ const CodigodeBarras2 = ({estadoForm ,Texto, idEntrada}) => {
     setCodigoBarras(event.target.value);
   };
 
+  const manejarCambioIdEmpleado = (event) => {
+    setIdEmpleado(event.target.value);
+  };
+
   const obtenerInformacionCodigoBarras = () => {
-    if(!codigoBarras || !idEntrada || !idEmpleado){
-      alert('Falta informacion para proceder')
+    if (!codigoBarras || !idEntrada || !idEmpleado) {
+      alert('Falta información para proceder');
+      return;
     }
-    //aqui va la peticion fetch para el DELETE de la tabla Entrada
+
     if (window.confirm('¿Está seguro de enviar este producto a salida?')) {
-    fetch('url/' + idEntrada+'/'+ codigoBarras, {
+      fetch('url/' + idEntrada + '/' + codigoBarras, {
         method: 'DELETE'
       })
         .then(resp => resp.text())
         .then(resp => {
           alert(resp);
-         
         });
-    } 
-    //aqui va la peticion fetch para el post de la tabla SALIDA
-    
-    console.log('Código de barras escaneado:', codigoBarras, 'empleado: ', idEmpleado);
-    estadoForm(false)
+    }
+
+    console.log('Código de barras escaneado:', codigoBarras, 'Empleado:', idEmpleado);
+    estadoForm(false);
   };
 
   return (
     <div className='CodigoDeBarras2'>
-      <label className= 'CodigoLabel2'htmlFor="codigoBarras">Ingrese el código de barras:</label>
-      < input className='CodigoInput2'
+      <label className='CodigoLabel2' htmlFor="codigoBarras">Ingrese el código de barras: </label>
+      <input
+        className='CodigoInput2'
         type="number"
         id="codigoBarras"
         value={codigoBarras}
         onChange={manejarCambioCodigoBarras}
       />
-      < input className='CodigoInput2'
+      <label className='CodigoLabel2' htmlFor="codigoBarras">Ingrese el código de Empleado: </label>
+      <input
+        className='CodigoInput2'
         type="number"
-        id="codigoBarras"
+        id="idEmpleado"
         value={idEmpleado}
-        onChange={(e)=>{setIdEmpleado(e.target.value)}}
+        onChange={manejarCambioIdEmpleado}
       />
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
-      <button className='CodigoButton2' onClick={obtenerInformacionCodigoBarras}>{Texto}</button>
-      <button className='CodigoButton2' onClick={estadoForm(false)}>{Texto}</button>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <button className='CodigoButton2' onClick={obtenerInformacionCodigoBarras}>{Texto}</button>
+        <button className='CodigoButton2' onClick={() => estadoForm(false)}>Cerrar</button>
       </div>
     </div>
   );
 };
 
 export default CodigodeBarras2;
+
 
 {/*modificr implementacion:
   // TarjetaStock.jsx

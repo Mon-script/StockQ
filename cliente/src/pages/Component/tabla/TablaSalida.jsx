@@ -130,14 +130,7 @@ useEffect (()=>{
                       </span>
                     </button>
                   </li>
-                  <li className="rounded px-2 py-1 hover:bg-metal-100">
-                    <button className="flex w-full items-center justify-between text-body-4 font-normal text-metal-600">
-                      <span>Edit</span>
-                      <span>
-                        <Pencil />
-                      </span>
-                    </button>
-                  </li>
+                  
                 </ul>
               </Popover.Container>
               <Popover.Action>

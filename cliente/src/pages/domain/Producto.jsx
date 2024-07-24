@@ -17,6 +17,7 @@ export const Producto = () => {
   const [imagenActual, setIamgenActual] = useState(null)
   const [nombreActual, setNombreActual] = useState('')
   const [calidadActual, setCalidadActual] = useState('')
+  const [idActual, setIdActual] = useState('')
 
 
 
@@ -107,11 +108,13 @@ export const Producto = () => {
 
   const setearNombreCalidad = (imagenActual)=>{
     let imageninfo = imagenActual.split('-');
+    let id = imageninfo[0];
     let nombree = imageninfo[1];
     let calidaa = imageninfo[2];
     console.log(nombree,calidaa)
     setCalidadActual(calidaa)
     setNombreActual(nombree)
+    setIdActual(id)
   }
 
   return (
@@ -250,7 +253,7 @@ export const Producto = () => {
             />
             <div className="card-body flex justify-between px-4 py-2">
               
-              <article><h3>Nombre: {nombreActual.toUpperCase()} <br /> Calidad: {calidadActual.toUpperCase()} </h3></article>
+              <article><h3>Nombre: {nombreActual.toUpperCase()} <br /> Calidad: {calidadActual.toUpperCase()} <br /> Codigo: {idActual.toUpperCase()} </h3></article>
               <button
                 onClick={manejarBorrar}
                 className="bg-red-500 text-white p-2 rounded-md mt-2"

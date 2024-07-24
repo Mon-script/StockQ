@@ -37,10 +37,15 @@ export const Stock = () => {
   ];
 
   const agregarEntrada = () => {
-    if (estanteria > numEstantes) {
-      alert('Debes indicar un estante existente')
+    if (estanteria < 1 && estanteria > numEstantes) {
+      alert(`Debes indicar un estante entre 1 y ${numEstantes} `)
       return
     }
+
+    if(!codigoProducto||!estanteria){
+      alert('Todos los campos deben estar completados')
+    }
+
 
     const now = new Date(); // trae la fecha y hora actual
     const fecha = now.toISOString().split('T')[0]; // Fecha en formato YYYY-MM-DD
@@ -60,15 +65,21 @@ export const Stock = () => {
       },
       body: JSON.stringify(data),
     })
-      .then(resp => resp.text())
-      .then(resp => alert(resp))
+      .then(resp => {
+        if (!resp.ok) {
+          throw new Error(`HTTP error! status: ${resp.status}`);
+        }
+        return resp.text();
+      })
+      .then(respText => alert(respText))
       .catch(error => console.error('Error:', error));
+    
 
   }
 
   return <>
 
-    <div className="min-h-screen flex flex-col items-center pt-4">
+    <div className="m-4 flex flex-col items-center pt-4">
       <div className="bg-gray-100 p-4 shadow-md w-full flex justify-between items-center">
         <h2 className="text-3xl font-semibold text-red-700 text">Entrada de Stock!</h2>
         <button
