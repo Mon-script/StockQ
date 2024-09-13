@@ -1,44 +1,24 @@
 // RutasProtegidas.js
-import React from 'react';
-import { Outlet} from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Outlet, Navigate } from 'react-router-dom';
+import { UserContext } from '../../userContext';
 import Login1 from './Login/log';
-import { useState, useEffect } from 'react';
-
-
-
-  function parseJWT(token) {
-    if (!token) return false;
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
-    );
-
-    return JSON.parse(jsonPayload);
-  }
-
-  
 
 function RutasProtegidas() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const tokenExistAndStillValid = token && parseJWT(token).exp * 1000 > Date.now();
-    {tokenExistAndStillValid ? setIsAuthenticated(true):setIsAuthenticated(false)}
-  }, []);
+    const { user } = useContext(UserContext);
 
-  if (!isAuthenticated) {
-    
-    return <Login1/>;
-  }
+    if (!user) {
+        return <Login1 />;
+    }
 
-  return <Outlet />;
+    // Puedes usar user.role para comprobar el rol del usuario
+    // Aquí simplemente estamos asegurándonos de que el usuario esté autenticado
+
+    return <Outlet />;
 }
 
 export default RutasProtegidas;
+
 
 
 

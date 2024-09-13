@@ -8,11 +8,18 @@ module.exports.login = (req, res) =>{
     try {
       connection.query(consult, [username, password], (err, result)=>{
           if(err){
-              res.send(err);
+              res.status(500).send(err);
+              
           }
 
           if(result.length > 0){
-              const token = jwt.sign({username}, "Stack", {
+            console.log(result)
+            let user= result[0]
+            const role = user.rol
+            //console.log(username,role)
+            
+            
+              const token = jwt.sign({username,role}, "Stack", {
                   expiresIn: '3m'
               });
               res.send({token});
@@ -22,6 +29,7 @@ module.exports.login = (req, res) =>{
           }
       })
     } catch (e) {
+        console.error(e)
 
     }
 
