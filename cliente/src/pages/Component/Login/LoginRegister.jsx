@@ -2,7 +2,7 @@ import React from 'react'
 import "./LoginRegister.css";
 import { FaUser, FaLock } from "react-icons/fa";
 
-const Login1 = () => {
+const LoginRegister = () => {
   return (
         <div className='wrapper'>
         <div className='form-box login'>
@@ -25,4 +25,4 @@ const Login1 = () => {
 }
 
 
-export default Login1
+export default LoginRegister

@@ -1,6 +1,6 @@
 
 import TarjetaStock from "../Component/tarjetas/TarjetaStock";
-import TablasEstantes from '../Component/estante/estante'
+import Matriz from "../Component/matrizStock/matrizS";
 import "./Stockpag.css";
 import { useState, useEffect } from "react";
 
@@ -8,30 +8,39 @@ export const Stock = () => {
   const [showForm, setShowForm] = useState('')
   const [codigoProducto, setCodigoProducto] = useState('')
   const [estanteria, setEstanteria] = useState('')
-  const [productos, setProductos] = useState('')
-  const [stockActializado, setStockActualizado] = useState(false)
 
-  useEffect(() => {
+  const numEstantes = 3;
+  const numFilas = 2;
+  const numColumnas = 3;
 
-    
-    fetch('http://localhost:3000/stock/get')
-      .then(response => response.json())
-      .then(response => {
-        setProductos(response)
-        console.log(response)
-      })
-      .catch(error => { console.error(error) })
+  const matrizEjemplo = [];
+  for (let i = 0; i < numEstantes; i++) {
+    matrizEjemplo.push([]);
+    for (let j = 0; j < numFilas; j++) {
+      matrizEjemplo[i].push([]);
+      for (let k = 0; k < numColumnas; k++) {
+        matrizEjemplo[i][j].push(`${String.fromCharCode(65 + i)}${j + 1}${String.fromCharCode(65 + k)}`);
+      }
+    }
+  }
 
-      setStockActualizado(false)
-  }, [stockActializado])
+  const productos = [
 
+    { nombre: 'Frutilla', peso: '30kg', calidad: 'Buena', color: 'rojas' },
+    { nombre: 'Manzana', peso: '25kg', calidad: 'Media', color: 'verde' },
+    { nombre: 'Pera', peso: '20kg', calidad: 'Premium', color: 'amarilla' },
+    { nombre: 'Frutilla', peso: '30kg', calidad: 'primera calidad', color: 'rojas' },
+    { nombre: 'Manzana', peso: '25kg', calidad: 'segunda calidad', color: 'verde' },
+    { nombre: 'Pera', peso: '20kg', calidad: 'tercera calidad', color: 'amarilla' }
 
+    // Otros productos...
+  ];
 
   const agregarEntrada = () => {
-   /* if (estanteria < 1 && estanteria > numEstantes) {
+    if (estanteria < 1 && estanteria > numEstantes) {
       alert(`Debes indicar un estante entre 1 y ${numEstantes} `)
       return
-    }*/
+    }
 
     if(!codigoProducto||!estanteria){
       alert('Todos los campos deben estar completados')
@@ -66,7 +75,6 @@ export const Stock = () => {
       .catch(error => console.error('Error:', error));
     
 
-      setStockActualizado(true)
   }
 
   return <>
@@ -143,73 +151,5 @@ export const Stock = () => {
       )}
     </div>
 
-    <TablasEstantes productos={productos} /> </>
+    <Matriz estantes={matrizEjemplo} productos={productos} /> </>
 };
-
-/*export const Stock=()=>{
-
-  const matrizEjemplo = [
-    // Estante 1
-    [
-      ['A', 'B', 'C'],
-      ['D', 'E', 'F'],
-    ],
-    // Estante 2
-    [
-      ['G', 'H', 'I'],
-      ['J', 'K', 'L'],
-    ],
-    // ... más estantes
-  ];
-
-  return <Matriz estantes={matrizEjemplo} />;
-  
-
-    return(
-          <>
-        <div className="TarjetaStock">
-            {<TarjetaStock/> }
-
-        </div>
-          
-          </>
-    )
-}
-*/
-/*numeroooo 2 
-export const Stock = () => {
-  const numEstantes = 2;
-  const numFilas = 3;
-  const numColumnas = 3;
-
-  const matrizEjemplo = [];
-  for (let i = 0; i < numEstantes; i++) {
-    matrizEjemplo.push([]);
-    for (let j = 0; j < numFilas; j++) {
-      matrizEjemplo[i].push([]);
-      for (let k = 0; k < numColumnas; k++) {
-        matrizEjemplo[i][j].push(`${String.fromCharCode(65 + i)}${j + 1}${String.fromCharCode(65 + k)}`);
-      }
-    }
-  }
-
-  const productos = [
-    { nombre: 'Frutilla', peso: '30kg', calidad: 'primera calidad', color: 'rojas' },
-    { nombre: 'Manzana', peso: '25kg', calidad: 'segunda calidad', color: 'verde' },
-    { nombre: 'Pera', peso: '20kg', calidad: 'tercera calidad', color: 'amarilla' },
-  ];
-
-  const ejemplo = [
-    [0, null, 1],
-    [null, 2, null],
-  ];
-
-  return (
-    <>
-      <h2>Stock Component</h2>
-      <Matriz estantes={matrizEjemplo} productos={productos} ejemplo={ejemplo} />
-    </>
-  );
-};
-*/
-

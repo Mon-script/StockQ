@@ -6,6 +6,8 @@ const {getSalida}= require('../controllers/salidaControler')
 const {saveProduct}=require('../controllers/productoController')
 const {getProducts}=require('../controllers/productoController')
 const {deleteProducts}=require('../controllers/productoController')
+const {getStock}=require('../controllers/stockcontroller')
+const {postEntrada}=require('../controllers/stockcontroller')
 const multer=require('multer')
 const path = require('path');
 const { getEntrada } = require('../controllers/entradaController');
@@ -33,10 +35,11 @@ router.get('/ping', ping);
 router.get('/salida',getSalida);
 router.get('/entrada',getEntrada);
 router.get('/productos/get',getProducts);
+router.get('/stock/get',getStock);
 
 router.post('/login', login);
 router.post('/saveProduct',avatarSubir, saveProduct);
-
+router.post('/post/entrada', postEntrada);
 router.delete('/producto/delete/:id/:nombree/:calidaa',deleteProducts)
 
 

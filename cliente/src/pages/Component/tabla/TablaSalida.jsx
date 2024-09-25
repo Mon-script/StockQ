@@ -2,12 +2,13 @@ import { Avatar, Badge, Button, Popover, Table } from 'keep-react';
 import { Crown, DotsThreeOutline, Trash } from 'phosphor-react';
 import { FechayHora } from "../DatePicker";
 import { ExcelExporter } from "../botones/exportExelBoton";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { format } from 'date-fns';
+import { UserContext } from '../../../userContext';
 
 export const TablaSalida = () => {
   const [dataArray, setData] = useState([]);
-
+  const { user } = useContext(UserContext);
   useEffect(() => {
     fetch('http://localhost:3000/salida', {
       method: 'GET',
@@ -59,7 +60,7 @@ export const TablaSalida = () => {
             </Table.Cell>
             <Table.Cell>
               <p className="text-body-5 font-medium text-metal-500">{format(new Date(item.fecha), 'dd/MM/yyyy')}</p>
-              <p className="text-body-6 font-normal text-metal-500">{format(new Date(`1970-01-01T${item.hora}Z`), 'HH:mm:ss')} hs</p>
+              <p className="text-body-6 font-normal text-metal-500">{format(new Date(`1970-01-01T${item.hora}Z`), 'HH:mm')} hs</p>
             </Table.Cell>
             <Table.Cell>
               <p className="text-body-5 font-medium text-metal-500">Empleado: {item.empleado_nombre}</p>
@@ -90,9 +91,11 @@ export const TablaSalida = () => {
                   </ul>
                 </Popover.Container>
                 <Popover.Action>
-                  <Button type="outlineGray" size="xs" circle={true}>
+
+                  {user && user.role === 'admin' ? <Button type="outlineGray" size="xs" circle={true}>
                     <DotsThreeOutline size={14} color="#5E718D" weight="bold" />
-                  </Button>
+                  </Button> :''}
+
                 </Popover.Action>
               </Popover>
             </Table.Cell>

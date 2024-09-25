@@ -10,6 +10,7 @@ import { Producto } from './pages/domain/Producto';
 import { Stock } from './pages/domain/stock';
 import { Entrada } from './pages/domain/entrada';
 import { Salida } from './pages/domain/salida';
+import LoginRegister from './pages/Component/Login/LoginRegister'
 import { UserProvider } from './userContext';
 
 
@@ -30,6 +31,7 @@ function App() {
               <Route path='/entrada' element={<Entrada />} />
               <Route path='/salida' element={<Salida />} />
               <Route path='/home' element={<Home />} />
+              <Route path='/registro' element={<LoginRegister />} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Route>

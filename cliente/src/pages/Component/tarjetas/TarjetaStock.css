@@ -1,3 +1,4 @@
+/* Contenedor de tarjetas */
 .cards {
   display: flex;
   height: 250px;
@@ -5,7 +6,7 @@
   background-color: transparent;
   border-radius: 10px;
   box-shadow: -1rem 0 3rem #00000044;
-  margin-left: 50px;
+  margin: 40px;
   transition: 0.4s ease-out;
   position: relative;
   flex-wrap: wrap;
